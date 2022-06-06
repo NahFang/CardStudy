@@ -1,26 +1,20 @@
-package com.nahfang.studycard.fragment;
+package com.nahfang.studycard.fragment.card;
 
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.nahfang.studycard.R;
-import com.nahfang.studycard.common.BaseFragment;
-import com.nahfang.studycard.common.BaseVMFragment;
-import com.nahfang.studycard.common.BaseViewModel;
 import com.nahfang.studycard.common.SingleVMFragment;
 import com.nahfang.studycard.databinding.FragmentCardBinding;
 
@@ -35,12 +29,29 @@ import java.util.ArrayList;
  * created by nahfang  qq: 2216812142
  */
 
-public class CardFragment extends SingleVMFragment<FragmentCardBinding,CardViewModel> implements View.OnClickListener, DrawerLayout.DrawerListener, View.OnTouchListener {
-    CardViewModel viewModel = null;
-    LinearLayout l = null;
+public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardViewModel> implements View.OnClickListener, DrawerLayout.DrawerListener, View.OnTouchListener {
+    private LinearLayout l = null;
+    private DrawerRVAdapter drawerRVAdapter;
 
-    public static CardFragment newInstance() {
-        return new CardFragment();
+
+    @Override
+    protected void initObserver() {
+        mBinding.setViewModle(viewmodel);
+        drawerRVAdapter = new DrawerRVAdapter();
+        drawerRVAdapter.setCardViewModel(viewmodel);
+        viewmodel.listCategory.observe(this, new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> strings) {
+                drawerRVAdapter.setDatalist(strings);
+            }
+        });
+        viewmodel.name_categorys.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                mBinding.textCategory.setText(s);
+                mBinding.mainDrawerlayout.close();
+            }
+        });
     }
 
 
@@ -58,8 +69,14 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding,CardViewM
         mBinding.mainDrawerlayout.addDrawerListener(this);
         mBinding.mainDrawerlayout.setOnTouchListener(this);
         mBinding.btRefresh.setOnClickListener(this);
+        viewmodel.getCategoty();
+        mBinding.recyclerviewDrawer.setAdapter(drawerRVAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mBinding.recyclerviewDrawer.setLayoutManager(linearLayoutManager);
 
-        viewmodel.print();
+
+
     }
 
    /* @Override
@@ -79,10 +96,7 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding,CardViewM
         return CardViewModel.class;
     }
 
-    @Override
-    protected void initObserver() {
 
-    }
 
 
     @Override
@@ -123,7 +137,7 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding,CardViewM
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if(view.equals(mBinding.mainDrawerlayout) ){
             mBinding.mainDrawerlayout.getParent().requestDisallowInterceptTouchEvent(true);
-            //&& motionEvent.equals(MotionEvent.ACTION_DOWN)
+
         }
         return false;
     }

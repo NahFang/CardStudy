@@ -13,13 +13,20 @@
     tools:context=".fragment.MainFragment"
     android:background="@color/bg_activityAndFragment"
     >
-
-    <androidx.viewpager2.widget.ViewPager2
+    <!-- 存在目前无法解决的问题下架 -->
+    <!--<androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </androidx.viewpager2.widget.ViewPager2>
+    </androidx.viewpager2.widget.ViewPager2>-->
+    <FrameLayout
+        android:id="@+id/container_fragment_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
     <LinearLayout
         android:id="@+id/navigation_bottom"
         android:layout_width="match_parent"
