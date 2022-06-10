@@ -21,13 +21,13 @@
     android:layout_height="match_parent"
     tools:context=".fragment.card.CardFragment">
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/card_content"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
         android:background="@drawable/bg_card"
-        android:text="简述Android 异步消息机制Handler的工作流程"
+        android:text="还不存在分类，快去添加你的小卡片吧"
         android:textStyle="bold"
         android:textSize="18sp"
         android:gravity="center"

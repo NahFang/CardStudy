@@ -16,17 +16,18 @@ import android.widget.LinearLayout;
 
 import com.nahfang.studycard.R;
 import com.nahfang.studycard.common.SingleVMFragment;
+import com.nahfang.studycard.bean.cardBean;
+import com.nahfang.studycard.components.dialog.ContentDialog;
 import com.nahfang.studycard.databinding.FragmentCardBinding;
 
 import java.util.ArrayList;
 
 /**
  * cardFragmet
- * 本页面主要用于随机提供卡片给用户记忆
+ * 本页面主要用于按照用户选择的算法，提供卡片给用户记忆
  * 存在一个bug  侧拉的菜单由于固定在该fragment上导致向右侧拉时会与上一级的Viewpager冲突,并且翻页后drawer不绘制
  * 并不完美的解决方案 ： 为该控件设置不许上层容器拦截 （内部拦截法），仍存在不绘制的问题，故不采用Viewpager
- * 该项目可能传到你手上了，希望你能想到更好的办法 如果求知急切但是找不到办法 可以联系我，说不定那时候我能解决了 哈哈~
- * created by nahfang  qq: 2216812142
+ * created by nahfang
  */
 
 public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardViewModel> implements View.OnClickListener, DrawerLayout.DrawerListener, View.OnTouchListener {
@@ -43,13 +44,35 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
             @Override
             public void onChanged(ArrayList<String> strings) {
                 drawerRVAdapter.setDatalist(strings);
+                String nameFromLocal = viewmodel.getCategoryNameFromLocal();
+                if(!nameFromLocal.equals(viewmodel.INIT_VALUE_SP)) {
+                    viewmodel.ToggleCategory(nameFromLocal);
+                } else if (!viewmodel.listCategory.getValue().isEmpty()) {
+                    String name = viewmodel.listCategory.getValue().get(0);
+                    viewmodel.ToggleCategory(name);
+                }
             }
         });
-        viewmodel.name_categorys.observe(this, new Observer<String>() {
+        viewmodel.name_category.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 mBinding.textCategory.setText(s);
                 mBinding.mainDrawerlayout.close();
+                viewmodel.setCategoryNameInLocal(s);
+                viewmodel.getCards(s);
+            }
+        });
+
+        viewmodel.cards.observe(this, new Observer<ArrayList<cardBean>>() {
+            @Override
+            public void onChanged(ArrayList<cardBean> cardBeans) {
+                viewmodel.getCard();
+            }
+        });
+        viewmodel.card.observe(this, new Observer<cardBean>() {
+            @Override
+            public void onChanged(cardBean cardBean) {
+                mBinding.cardContent.setText(cardBean.getTitle());
             }
         });
     }
@@ -63,20 +86,22 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mBinding.btShowCategory.setOnClickListener(this);
+        initDrawerLogic();
         l = (LinearLayout) getParentFragment().getView().findViewById(R.id.navigation_bottom);
+        mBinding.btRefresh.setOnClickListener(this);
+        mBinding.btShowanswer.setOnClickListener(this);
+    }
+
+    private void initDrawerLogic () {
+        mBinding.btShowCategory.setOnClickListener(this);
+        mBinding.textCategory.setOnClickListener(this);
         mBinding.mainDrawerlayout.addDrawerListener(this);
         mBinding.mainDrawerlayout.setOnTouchListener(this);
-        mBinding.btRefresh.setOnClickListener(this);
-        viewmodel.getCategoty();
+        viewmodel.getCategorys();
         mBinding.recyclerviewDrawer.setAdapter(drawerRVAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.recyclerviewDrawer.setLayoutManager(linearLayoutManager);
-
-
-
     }
 
    /* @Override
@@ -101,9 +126,21 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
 
     @Override
     public void onClick(View view) {
-        if (view.equals(mBinding.btShowCategory)) {
+        if (view.equals(mBinding.btShowCategory) || view.equals(mBinding.textCategory)) {
             mBinding.mainDrawerlayout.openDrawer(Gravity.LEFT);
         }else if(view.equals(mBinding.btRefresh)){
+            viewmodel.getCard();
+        }else if (view.equals(mBinding.btShowanswer)) {
+            if(viewmodel.cards.getValue() != null) {
+                ContentDialog dialog = new ContentDialog.Builder(getContext())
+                        .setMessage(viewmodel.mCard.getContent())
+                        .setCancelable(true)
+                        .setOutsiCancel(false)
+                        .create();
+                dialog.show();
+            } else {
+                setToast("快去建立属于你的卡片吧！");
+            }
 
         }
     }
