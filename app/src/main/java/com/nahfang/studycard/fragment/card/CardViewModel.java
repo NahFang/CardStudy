@@ -48,32 +48,13 @@ public class CardViewModel extends BaseViewModel {
 
     public void getCards (String category_name) {
         //根据传入的类别名称在数据库中查询
-        /*cardBean card = new cardBean();
-        card.setCategory_name("计算机网络");
-        card.setTitle("讲一下UDP和TCP的区别？");
-        card.setContent("我虽然不是很清楚UDP和TCP的区别，但是，我可以说说基于UDP的协议QUIC");
-        arr_cards.add(card);
-        cardBean card1 = new cardBean();
-        card1.setCategory_name("计算机网络");
-        card1.setTitle("讲一下UDP和TCP的区别？1");
-        card1.setContent("我虽然不是很清楚UDP和TCP的区别，但是，我可以说说基于UDP的协议QUIC");
-        arr_cards.add(card1);
-        cardBean card2 = new cardBean();
-        card2.setCategory_name("计算机网络");
-        card2.setTitle("讲一下UDP和TCP的区别？2");
-        card2.setContent("我虽然不是很清楚UDP和TCP的区别，但是，我可以说说基于UDP的协议QUIC");
-        arr_cards.add(card2);
-        _cards.setValue(arr_cards);*/
+
+        _cards.setValue(arr_cards);
     }
 
     public void getCategorys() {
         //后期获取数据
-        /*arr_category_drawer.add("计算机网络");
-        arr_category_drawer.add("计算机网络");
-        arr_category_drawer.add("Android");
-        arr_category_drawer.add("计算机网络");
-        arr_category_drawer.add("计算机网络");
-        arr_category_drawer.add("计算机网络");*/
+
         _listCategory.setValue(arr_category_drawer);
     }
 

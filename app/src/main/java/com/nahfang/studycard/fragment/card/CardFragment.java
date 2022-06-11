@@ -21,6 +21,7 @@ import com.nahfang.studycard.components.dialog.ContentDialog;
 import com.nahfang.studycard.databinding.FragmentCardBinding;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * cardFragmet
@@ -40,41 +41,25 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
         mBinding.setViewModle(viewmodel);
         drawerRVAdapter = new DrawerRVAdapter();
         drawerRVAdapter.setCardViewModel(viewmodel);
-        viewmodel.listCategory.observe(this, new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(ArrayList<String> strings) {
-                drawerRVAdapter.setDatalist(strings);
-                String nameFromLocal = viewmodel.getCategoryNameFromLocal();
-                if(!nameFromLocal.equals(viewmodel.INIT_VALUE_SP)) {
-                    viewmodel.ToggleCategory(nameFromLocal);
-                } else if (!viewmodel.listCategory.getValue().isEmpty()) {
-                    String name = viewmodel.listCategory.getValue().get(0);
-                    viewmodel.ToggleCategory(name);
-                }
+        viewmodel.listCategory.observe(this, strings -> {
+            drawerRVAdapter.setDatalist(strings);
+            String nameFromLocal = viewmodel.getCategoryNameFromLocal();
+            if(!nameFromLocal.equals(viewmodel.INIT_VALUE_SP)) {
+                viewmodel.ToggleCategory(nameFromLocal);
+            } else if (!Objects.requireNonNull(viewmodel.listCategory.getValue()).isEmpty()) {
+                String name = viewmodel.listCategory.getValue().get(0);
+                viewmodel.ToggleCategory(name);
             }
         });
-        viewmodel.name_category.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                mBinding.textCategory.setText(s);
-                mBinding.mainDrawerlayout.close();
-                viewmodel.setCategoryNameInLocal(s);
-                viewmodel.getCards(s);
-            }
+        viewmodel.name_category.observe(this, s -> {
+            mBinding.textCategory.setText(s);
+            mBinding.mainDrawerlayout.close();
+            viewmodel.setCategoryNameInLocal(s);
+            viewmodel.getCards(s);
         });
 
-        viewmodel.cards.observe(this, new Observer<ArrayList<cardBean>>() {
-            @Override
-            public void onChanged(ArrayList<cardBean> cardBeans) {
-                viewmodel.getCard();
-            }
-        });
-        viewmodel.card.observe(this, new Observer<cardBean>() {
-            @Override
-            public void onChanged(cardBean cardBean) {
-                mBinding.cardContent.setText(cardBean.getTitle());
-            }
-        });
+        viewmodel.cards.observe(this, cardBeans -> viewmodel.getCard());
+        viewmodel.card.observe(this, cardBean -> mBinding.cardContent.setText(cardBean.getTitle()));
     }
 
 
@@ -87,6 +72,7 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initDrawerLogic();
+        assert getParentFragment() != null;
         l = (LinearLayout) getParentFragment().getView().findViewById(R.id.navigation_bottom);
         mBinding.btRefresh.setOnClickListener(this);
         mBinding.btShowanswer.setOnClickListener(this);
@@ -104,17 +90,6 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
         mBinding.recyclerviewDrawer.setLayoutManager(linearLayoutManager);
     }
 
-   /* @Override
-    protected void initViewModel() {
-        viewModel = getViewModel(this,CardViewModel.class);
-    }
-
-    @Override
-    protected ArrayList<BaseViewModel> getArrayViewModel() {
-        ArrayList<BaseViewModel> arr = new ArrayList<>();
-        arr.add(viewModel);
-        return arr;
-    }*/
 
     @Override
     protected Class<CardViewModel> getViewModelClassType() {

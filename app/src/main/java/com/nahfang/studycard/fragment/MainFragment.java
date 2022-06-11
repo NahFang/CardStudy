@@ -14,6 +14,7 @@ import com.nahfang.studycard.common.BaseVMFragment;
 import com.nahfang.studycard.common.BaseViewModel;
 import com.nahfang.studycard.databinding.FragmentMainBinding;
 import com.nahfang.studycard.fragment.card.CardFragment;
+import com.nahfang.studycard.fragment.container.NoteFragment;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class MainFragment extends BaseVMFragment<FragmentMainBinding> implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragments.add(new CardFragment());
-        fragments.add(new ContainerFragment());
+        fragments.add(new NoteFragment());
         fragments.add(new RecordFragment());
     }
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_card">
+    <androidx.cardview.widget.CardView
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="30dp">
+        <TextView
+            android:id="@+id/bt_delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#E91E63"
+            android:text="确认删除"
+            android:gravity="center"
+            android:textColor="@color/white"/>
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

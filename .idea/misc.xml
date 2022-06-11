@@ -6,11 +6,15 @@
         <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/drawable/bg_button_comon.xml" value="0.146" />
         <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/drawable/bg_card.xml" value="0.1055" />
         <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/dialog_add_category.xml" value="0.2526041666666667" />
         <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/dialog_content.xml" value="0.17216117216117216" />
+        <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/dialog_delete.xml" value="0.10885416666666667" />
         <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/fragment_card.xml" value="0.2" />
-        <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/fragment_container.xml" value="0.25364583333333335" />
+        <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/fragment_container.xml" value="0.264" />
         <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/fragment_main.xml" value="0.2" />
         <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/fragment_record.xml" value="0.25364583333333335" />
+        <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/item_cards.xml" value="0.2526041666666667" />
+        <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/item_cards_add.xml" value="0.2526041666666667" />
         <entry key="..\:/MyAndroidProjects/StudyCard/app/src/main/res/layout/item_rv_drawer.xml" value="0.2526041666666667" />
       </map>
     </option>

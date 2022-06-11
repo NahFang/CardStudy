@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F2F2"
+    android:alpha="0.8">
+
+
+    <FrameLayout
+        android:layout_width="331dp"
+        android:layout_height="183dp"
+        android:background="@drawable/bg_card"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.361">
+        <EditText
+            android:id="@+id/edit_add"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:lines="1"
+            android:maxLength="5"
+            android:cursorVisible="false"
+            android:hint="输入卡集名称"
+            android:gravity="center"
+            android:background="@null"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/count_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"/>
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/bt_cancel_add"
+        android:layout_width="35dp"
+        android:layout_height="31dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.337"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.697"
+        app:srcCompat="@drawable/ic_close" />
+
+    <ImageView
+        android:id="@+id/bt_finish_add"
+        android:layout_width="35dp"
+        android:layout_height="31dp"
+        android:layout_marginEnd="112dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.892"
+        app:layout_constraintStart_toEndOf="@+id/bt_cancel_add"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.696"
+        app:srcCompat="@drawable/ic_finish" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

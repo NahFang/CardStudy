@@ -2,17 +2,23 @@ package com.nahfang.studycard.components.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.nahfang.studycard.R;
+
+/**
+ * 内容展示框
+ */
 
 public class ContentDialog extends Dialog{
 
@@ -25,6 +31,7 @@ public class ContentDialog extends Dialog{
        private String msg;
        private boolean isCancelable = true;
        private boolean isCancleOutside = false;
+       private double Height_factor = 0.7;
 
        public Builder (Context context) {
            this.context = context;
@@ -42,6 +49,10 @@ public class ContentDialog extends Dialog{
 
        public Builder setOutsiCancel (boolean isCancelOutside) {
            this.isCancleOutside = isCancelOutside;
+           return this;
+       }
+       public Builder setHeightFactor(double factor) {
+           this.Height_factor = factor;
            return this;
        }
 
@@ -63,7 +74,10 @@ public class ContentDialog extends Dialog{
            Window window = dialog.getWindow();
            window.setGravity(Gravity.BOTTOM);
            window.setWindowAnimations(R.style.DialogTheme);
-           window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+           WindowManager windowManager = window.getWindowManager();
+           Display display = windowManager.getDefaultDisplay();
+           int height = (int) ((int) display.getHeight() * Height_factor);
+           window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,height);
 
            return dialog;
        }

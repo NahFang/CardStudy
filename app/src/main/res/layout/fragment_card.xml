@@ -27,7 +27,7 @@
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
         android:background="@drawable/bg_card"
-        android:text="还不存在分类，快去添加你的小卡片吧"
+        android:text="快去添加你的小卡片吧"
         android:textStyle="bold"
         android:textSize="18sp"
         android:gravity="center"
