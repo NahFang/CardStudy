@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,11 +23,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.nahfang.studycard.MainActivity;
 import com.nahfang.studycard.R;
 import com.nahfang.studycard.bean.cardsBean;
 import com.nahfang.studycard.components.dialog.DeleteDialog;
 import com.nahfang.studycard.utils.BlurBitmap;
+import com.nahfang.studycard.utils.algorithmUtil;
 
 import java.util.ArrayList;
 
@@ -88,8 +93,14 @@ public class cardsAdapter extends RecyclerView.Adapter {
         if(viewType == VIEW_TYPE_IN) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cards,parent,false);
             viewHolder = new ViewHolder(view);
+            RecyclerView.ViewHolder finalViewHolder1 = viewHolder;
             viewHolder.itemView.setOnClickListener(view1 -> {
                 //在这里完成启动内容页
+                int position = finalViewHolder1.getAdapterPosition();
+                String name = arrayList.get(position).getName_cards();
+                Bundle bundle = new Bundle();
+                bundle.putString("name",name);
+                Navigation.findNavController(view1).navigate(R.id.cardsInsideFragment,bundle);
             });
 
             RecyclerView.ViewHolder finalViewHolder = viewHolder;
@@ -105,10 +116,8 @@ public class cardsAdapter extends RecyclerView.Adapter {
                     TextView bt = (TextView) view_dialog.findViewById(R.id.bt_delete);
                     bt.setOnClickListener((view1 -> {
                         int position = finalViewHolder.getAdapterPosition();
-                        arrayList.remove(position);
-                        notifyDataSetChanged();
+                        noteViewModel.removeCardCategory(arrayList.get(position));
                         dialog.dismiss();
-                        //需要在这里对数据库的一些操作进行
                     }));
                     dialog.setContentView(view_dialog);
                     Window window = dialog.getWindow();
@@ -176,7 +185,7 @@ public class cardsAdapter extends RecyclerView.Adapter {
                     } else {
                         cardsBean cardsBean = new cardsBean();
                         cardsBean.setName_cards(name);
-                        cardsBean.setSrc_cards(R.drawable.ic_cards_1);
+                        cardsBean.setSrc_cards(algorithmUtil.get_Random(new imgArraList().getArrayList()));
                         noteViewModel.addCardCategory(cardsBean);
                         dialog.dismiss();
                     }
@@ -184,13 +193,10 @@ public class cardsAdapter extends RecyclerView.Adapter {
 
                 dialog.setContentView(view_bt);
                 //回收资源
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        // 对话框取消时释放背景图bitmap
-                        if (blurBg != null && !blurBg.isRecycled()) {
-                            blurBg.recycle();
-                        }
+                dialog.setOnDismissListener(dialog1 -> {
+                    // 对话框取消时释放背景图bitmap
+                    if (blurBg != null && !blurBg.isRecycled()) {
+                        blurBg.recycle();
                     }
                 });
                 dialog.show();

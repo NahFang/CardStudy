@@ -15,7 +15,11 @@ public class NoteViewModel extends BaseViewModel {
     LiveData<ArrayList<cardsBean>> cardsArray = _cardsArray;
 
     public void getCards () {
+        //进行数据库的操作
         mCardsArralist.clear();
+        cardsBean cardsBean = new cardsBean();
+        cardsBean.setName_cards("测试");
+        mCardsArralist.add(cardsBean);
         _cardsArray.setValue(mCardsArralist);
     }
     public void addCardCategory (cardsBean cardsBean) {

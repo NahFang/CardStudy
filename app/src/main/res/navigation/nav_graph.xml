@@ -10,4 +10,14 @@
         android:name="com.nahfang.studycard.fragment.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/cardsInsideFragment"
+        android:name="com.nahfang.studycard.fragment.container.CardsInsideFragment"
+        android:label="fragment_cards_inside"
+        tools:layout="@layout/fragment_cards_inside" />
+    <fragment
+        android:id="@+id/updateOrAddCardFragment"
+        android:name="com.nahfang.studycard.fragment.container.UpdateOrAddCardFragment"
+        android:label="fragment_update_or_add_card"
+        tools:layout="@layout/fragment_update_or_add_card" />
 </navigation>

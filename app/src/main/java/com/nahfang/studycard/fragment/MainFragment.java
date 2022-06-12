@@ -24,6 +24,7 @@ public class MainFragment extends BaseVMFragment<FragmentMainBinding> implements
     private MainViewModel viewModel = null;
     private FragmentManager fragmentManager = null;
     private FragmentTransaction transaction = null;
+    private int page = 0;
 
     private ArrayList<Fragment> fragments = new ArrayList<>();
     @Override
@@ -63,7 +64,7 @@ public class MainFragment extends BaseVMFragment<FragmentMainBinding> implements
         mBinding.buttonContainer.setOnClickListener(this);
         mBinding.buttonRecord.setOnClickListener(this);
         fragmentManager = this.getChildFragmentManager();
-        replaceFragment(fragments.get(0));
+        replaceFragment(fragments.get(page));
 
 
     }
@@ -76,10 +77,13 @@ public class MainFragment extends BaseVMFragment<FragmentMainBinding> implements
     @Override
     public void onClick(View view) {
         if (mBinding.buttonCard.equals(view)) {
+            page = 0;
            replaceFragment(fragments.get(0));
         } else if (mBinding.buttonContainer.equals(view)) {
+            page = 1;
             replaceFragment(fragments.get(1));
         }else if (mBinding.buttonRecord.equals(view)) {
+            page = 2;
             replaceFragment(fragments.get(2));
         }
     }

@@ -16,7 +16,7 @@ abstract public class SingleVMFragment<Binding extends ViewDataBinding,VM extend
 
     @Override
     final protected void initViewModel(){
-        viewmodel = getViewModel(this,getViewModelClassType());
+        viewmodel = getViewModel(getActivity(),getViewModelClassType());
     }
     @Override
     final protected ArrayList<BaseViewModel> getArrayViewModel(){
