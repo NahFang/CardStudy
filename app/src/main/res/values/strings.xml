@@ -2,4 +2,11 @@
     <string name="app_name">识鹿</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="random">随机抽取卡片</string>
+    <string name="order">顺序抽取卡片</string>
+    <string name="recycle">回收站</string>
+    <string name="UserAgreement">用户协议</string>
+    <string name="feedback">联系作者（反馈）</string>
+
+
 </resources>

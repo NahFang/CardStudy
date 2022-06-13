@@ -15,6 +15,7 @@ import com.nahfang.studycard.common.BaseViewModel;
 import com.nahfang.studycard.databinding.FragmentMainBinding;
 import com.nahfang.studycard.fragment.card.CardFragment;
 import com.nahfang.studycard.fragment.container.NoteFragment;
+import com.nahfang.studycard.fragment.record.RecordFragment;
 
 import java.util.ArrayList;
 

@@ -12,4 +12,8 @@
 
     <!-- activity/fragment背景颜色 -->
     <color name="bg_activityAndFragment">#FFF5FBFB</color>
+
+    <!-- 系统设置页面字体颜色 -->
+    <color name="textColor_setting">#807F7F</color>
+
 </resources>
