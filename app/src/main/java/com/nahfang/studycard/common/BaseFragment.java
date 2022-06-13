@@ -22,7 +22,7 @@ import com.nahfang.studycard.R;
  */
 abstract public class BaseFragment<Binding extends ViewDataBinding> extends Fragment {
 
-    protected Binding mBinding;
+    protected Binding mBinding = null;
     protected View mView;
 
     @Override
@@ -39,8 +39,10 @@ abstract public class BaseFragment<Binding extends ViewDataBinding> extends Frag
 
     }
     protected View obtainRootView(LayoutInflater inflater, ViewGroup container){
-        mBinding = DataBindingUtil.inflate(inflater, getRootViewResId(), container, false);
-        mBinding.setLifecycleOwner(this);
+        if (mBinding == null) {
+            mBinding = DataBindingUtil.inflate(inflater, getRootViewResId(), container, false);
+            mBinding.setLifecycleOwner(this);
+        }
         mView = mBinding.getRoot();
         return mView;
     }

@@ -23,6 +23,8 @@ public class UpdateOrAddCardFragment extends SingleVMFragment<FragmentUpdateOrAd
 
     public static final String ADD_FACTOR = "add";
     public static final String UPDATE_FACTOR = "update";
+    private String source;
+    private int position;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,16 +45,28 @@ public class UpdateOrAddCardFragment extends SingleVMFragment<FragmentUpdateOrAd
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (getArguments().getString("source").equals(ADD_FACTOR)) {
-            //在这里将传过来的数据绑定到view
+        if (getArguments().getString("source").equals(UPDATE_FACTOR)) {
+            this.source = UPDATE_FACTOR;
+            int position = getArguments().getInt("position");
+            this.position = position;
+            mBinding.textTitle.setVisibility(View.VISIBLE);
+            cardBean cardBean = viewmodel.mCardArrayList.get(position);
+            mBinding.textTitle.setText(cardBean.getTitle());
+            mBinding.editTitle.setVisibility(View.GONE);
+            mBinding.editContent.setText(cardBean.getContent());
+        } else if (getArguments().getString("source").equals(ADD_FACTOR)) {
+            this.source = getArguments().getString("source");
         }
+
         mBinding.editContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
+
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
@@ -62,10 +76,20 @@ public class UpdateOrAddCardFragment extends SingleVMFragment<FragmentUpdateOrAd
             }
 
         });
+
         mBinding.btFinishAddCard.setOnClickListener((view1)->{
-            //在这里完成数据库操作
-            viewmodel.addCard(new cardBean());
-            Navigation.findNavController(view1).popBackStack();
+            if(source.equals(ADD_FACTOR)) {
+                cardBean cardBean = new cardBean();
+                cardBean.setContent(mBinding.editContent.getText().toString());
+                cardBean.setTitle(mBinding.editTitle.getText().toString());
+                viewmodel.addCard(cardBean);
+                Navigation.findNavController(view1).popBackStack();
+            } else if (source.equals(UPDATE_FACTOR)) {
+                String content = mBinding.editContent.getText().toString();
+                viewmodel.updateCard(position,content);
+                Navigation.findNavController(view1).popBackStack();
+            }
+
         });
     }
 

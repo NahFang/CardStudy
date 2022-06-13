@@ -21,18 +21,26 @@ public class CardsInsideViewModel extends BaseViewModel {
        _CardsName.setValue(cardsName);
    }*/
     private String oldName = "";
-    private ArrayList<cardBean> mCardArrayList = new ArrayList<>();
+    public ArrayList<cardBean> mCardArrayList = new ArrayList<>();
     private MutableLiveData<ArrayList<cardBean>> _cardArrayList = new MutableLiveData<>();
     public LiveData<ArrayList<cardBean>> cardArrayList = _cardArrayList;
 
    public void getCardsFromName (String cardsName) {
+
       //在这里根据name 从数据库拉数据
-       if(cardsName.equals(oldName)) {
+       if(!cardsName.equals(oldName)) {
+           mCardArrayList.clear();
            //如果两次的name相同，则不进行数据库查询
+           _cardArrayList.setValue(mCardArrayList);
+           oldName = cardsName;
        }
 
    }
-   public void updateCard (String cardName) {
+   public void updateCard (int position,String content) {
+       cardBean cardBean = mCardArrayList.get(position);
+       cardBean.setContent(content);
+       mCardArrayList.set(position,cardBean);
+       _cardArrayList.setValue(mCardArrayList);
        //在这里完成对卡片的修改 进行数据库操作
    }
    public void addCard (cardBean cardBean) {
