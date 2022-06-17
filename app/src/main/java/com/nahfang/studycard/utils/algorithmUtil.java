@@ -20,5 +20,9 @@ public final class algorithmUtil {
         result = index > 0 ? arr.get(index) : arr.get(0);
         return result;
     }
+    //顺序算法
+    public static <T> T get_Order (ArrayList<T> arr) {
+        return arr.get(0);
+    }
     //后续待完善
 }

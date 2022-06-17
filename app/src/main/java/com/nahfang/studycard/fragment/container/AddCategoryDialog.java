@@ -45,7 +45,6 @@ public class AddCategoryDialog extends Dialog {
             AddCategoryDialog dialog = new AddCategoryDialog(context, R.style.SquareEntranceDialogStyle);
             dialog.setCancelable(isCancelable);
             dialog.setCanceledOnTouchOutside(isCancelOutside);
-
             return dialog;
         }
     }

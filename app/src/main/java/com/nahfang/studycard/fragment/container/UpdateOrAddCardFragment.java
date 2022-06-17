@@ -82,6 +82,7 @@ public class UpdateOrAddCardFragment extends SingleVMFragment<FragmentUpdateOrAd
                 cardBean cardBean = new cardBean();
                 cardBean.setContent(mBinding.editContent.getText().toString());
                 cardBean.setTitle(mBinding.editTitle.getText().toString());
+                cardBean.setCategory_name(viewmodel.CardsName.getValue());
                 viewmodel.addCard(cardBean);
                 Navigation.findNavController(view1).popBackStack();
             } else if (source.equals(UPDATE_FACTOR)) {

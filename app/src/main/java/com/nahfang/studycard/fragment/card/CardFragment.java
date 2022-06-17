@@ -41,16 +41,22 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
         mBinding.setViewModle(viewmodel);
         drawerRVAdapter = new DrawerRVAdapter();
         drawerRVAdapter.setCardViewModel(viewmodel);
+
         viewmodel.listCategory.observe(this, strings -> {
             drawerRVAdapter.setDatalist(strings);
+
             String nameFromLocal = viewmodel.getCategoryNameFromLocal();
+
             if(!nameFromLocal.equals(viewmodel.INIT_VALUE_SP)) {
                 viewmodel.ToggleCategory(nameFromLocal);
-            } else if (!Objects.requireNonNull(viewmodel.listCategory.getValue()).isEmpty()) {
-                String name = viewmodel.listCategory.getValue().get(0);
+            } else if (!strings.isEmpty()) {
+                String name = strings.get(0);
                 viewmodel.ToggleCategory(name);
+            } else {
+                UIcler();
             }
         });
+
         viewmodel.name_category.observe(this, s -> {
             mBinding.textCategory.setText(s);
             mBinding.mainDrawerlayout.close();
@@ -58,7 +64,11 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
             viewmodel.getCards(s);
         });
 
-        viewmodel.cards.observe(this, cardBeans -> viewmodel.getCard());
+        viewmodel.cards.observe(this, cardBeans ->{
+            if (!cardBeans.isEmpty()) {
+                viewmodel.getCard();
+            }
+        });
         viewmodel.card.observe(this, cardBean -> mBinding.cardContent.setText(cardBean.getTitle()));
     }
 
@@ -72,6 +82,7 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initDrawerLogic();
+
         assert getParentFragment() != null;
         l = (LinearLayout) getParentFragment().getView().findViewById(R.id.navigation_bottom);
         mBinding.btRefresh.setOnClickListener(this);
@@ -83,7 +94,9 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
         mBinding.textCategory.setOnClickListener(this);
         mBinding.mainDrawerlayout.addDrawerListener(this);
         mBinding.mainDrawerlayout.setOnTouchListener(this);
+
         viewmodel.getCategorys();
+
         mBinding.recyclerviewDrawer.setAdapter(drawerRVAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -106,7 +119,7 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
         }else if(view.equals(mBinding.btRefresh)){
             viewmodel.getCard();
         }else if (view.equals(mBinding.btShowanswer)) {
-            if(viewmodel.cards.getValue() != null) {
+            if(viewmodel.cards.getValue() != null && viewmodel.mCard != null) {
                 ContentDialog dialog = new ContentDialog.Builder(getContext())
                         .setMessage(viewmodel.mCard.getContent())
                         .setCancelable(true)
@@ -152,6 +165,11 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
 
         }
         return false;
+    }
+    private void UIcler() {
+        viewmodel.mCard = null;
+        mBinding.cardContent.setText("请添加新的卡片噢");
+        mBinding.textCategory.setText("暂无分类");
     }
 
 

@@ -14,11 +14,13 @@ import java.util.ArrayList;
 
 public class DrawerRVAdapter extends RecyclerView.Adapter<DrawerRVAdapter.ViewHodle> {
 
-    private ArrayList<String> datalist;
+    private ArrayList<String> datalist = new ArrayList<>();
     private CardViewModel cardViewModel;
 
     public void setDatalist(ArrayList<String> list) {
-        datalist = list;
+        datalist.clear();
+        datalist.addAll(list);
+        notifyDataSetChanged();
     }
     public void setCardViewModel(CardViewModel cardViewModel) {
         this.cardViewModel = cardViewModel;

@@ -1,5 +1,6 @@
 package com.nahfang.studycard.fragment.card;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
@@ -9,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.nahfang.studycard.application;
 import com.nahfang.studycard.common.BaseViewModel;
 import com.nahfang.studycard.bean.cardBean;
+import com.nahfang.studycard.fragment.record.RecordFragment;
 import com.nahfang.studycard.utils.algorithmUtil;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 public class CardViewModel extends BaseViewModel {
 
     //用于在获取本地存储分类时，当本地不存在该类型值时的默认值
-    public static final String INIT_VALUE_SP = "#no";
+    public static final String INIT_VALUE_SP = "<#no>";
 
     private ArrayList<String> arr_category_drawer = new ArrayList<>();
     private MutableLiveData<ArrayList<String>> _listCategory = new MutableLiveData<>();
@@ -33,12 +35,21 @@ public class CardViewModel extends BaseViewModel {
     private MutableLiveData<cardBean> _card = new MutableLiveData<>();
     public LiveData<cardBean> card = _card;
 
+    private String getAlgorithm () {
+        SharedPreferences sharedPreferences = application.context.getSharedPreferences(RecordFragment.SWITCHSECTOR_SP, Context.MODE_PRIVATE);
+        String result = sharedPreferences.getString(RecordFragment.SWITCHSECTOR_SP_String,RecordFragment.RANDOM_CARD);
+        return  result;
+    }
+
     public void getCard () {
         //按照用户给的算法设置，获取一个card
         if(arr_cards.isEmpty()) {
             Toast.makeText(application.context, "本分类内容已复习完成，可切换分类继续复习噢", Toast.LENGTH_SHORT).show();
         } else {
-            mCard = algorithmUtil.get_Random(arr_cards);
+            switch (getAlgorithm()) {
+                case RecordFragment.ORDER_CARD:mCard = algorithmUtil.get_Order(arr_cards);break;
+                case RecordFragment.RANDOM_CARD:mCard = algorithmUtil.get_Random(arr_cards);break;
+            }
             arr_cards.remove(mCard);
             mCard.setIsRead(true);
             _card.setValue(mCard);
@@ -48,14 +59,29 @@ public class CardViewModel extends BaseViewModel {
 
     public void getCards (String category_name) {
         //根据传入的类别名称在数据库中查询
+        application.threadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                arr_cards.clear();
+                arr_cards.addAll(application.dataBase.cardDao().getCardsFollowCategory(category_name));
+                _cards.postValue(arr_cards);
+            }
+        });
 
-        _cards.setValue(arr_cards);
+
     }
 
     public void getCategorys() {
         //后期获取数据
 
-        _listCategory.setValue(arr_category_drawer);
+        application.threadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                arr_category_drawer.clear();
+                arr_category_drawer.addAll(application.dataBase.cardsDao().getAllCardsName());
+                _listCategory.postValue(arr_category_drawer);
+            }
+        });
     }
 
     //切换分类
@@ -63,12 +89,14 @@ public class CardViewModel extends BaseViewModel {
         _name_category.setValue(s_cateGory);
         //添加其它设置逻辑
     }
+
     public void setCategoryNameInLocal (String name) {
         SharedPreferences.Editor editor = application.context.getSharedPreferences("category",
                 application.context.MODE_PRIVATE).edit();
         editor.putString("categoryName", name);
         editor.apply();
     }
+
     public String getCategoryNameFromLocal() {
         SharedPreferences preC = application.context.getSharedPreferences("category", application.context.MODE_PRIVATE);
         String s = preC.getString("categoryName", INIT_VALUE_SP);

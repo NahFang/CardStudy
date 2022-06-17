@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.nahfang.studycard.fragment.record.RecordFragment;
+
 /**
  * 作为用户第一次进入app的欢迎界面
  *
@@ -37,6 +39,11 @@ public class LaucherActivity extends AppCompatActivity {
                         MODE_PRIVATE).edit();
                 editor.putBoolean("isLauch", true);
                 editor.apply();
+
+                SharedPreferences.Editor editor1 = getSharedPreferences(RecordFragment.SWITCHSECTOR_SP,MODE_PRIVATE).edit();
+                editor1.putString(RecordFragment.SWITCHSECTOR_SP_String, RecordFragment.RANDOM_CARD);
+                editor1.apply();
+
                 startActivity(intent);
                 finish();
             }

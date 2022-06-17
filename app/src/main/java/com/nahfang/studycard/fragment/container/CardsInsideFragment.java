@@ -32,9 +32,11 @@ public class CardsInsideFragment extends SingleVMFragment<FragmentCardsInsideBin
 
     @Override
     protected void initObserver() {
-        /*viewmodel.CardsName.observe(this, name -> {
+
+        viewmodel.CardsName.observe(this, name -> {
             viewmodel.getCardsFromName(name);
-        });*/
+        });
+
         if (adapter_cards == null) {
             adapter_cards = new ViewpagerAdapter_cards();
         }
@@ -85,8 +87,8 @@ public class CardsInsideFragment extends SingleVMFragment<FragmentCardsInsideBin
 
         initViewpager2();
 
-        //viewmodel.setCardsName(getArguments().getString("name"));
-        viewmodel.getCardsFromName(getArguments().getString("name"));
+        viewmodel.setCardsName(getArguments().getString("name"));
+       /* viewmodel.getCardsFromName(getArguments().getString("name"));*/
 
         mBinding.btAddCard.setOnClickListener((view1) -> {
             //打开对应的界面
