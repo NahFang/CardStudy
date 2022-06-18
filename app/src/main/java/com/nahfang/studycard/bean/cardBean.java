@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class cardBean {
+
     @PrimaryKey(autoGenerate = true)
     private int cid;
 
@@ -21,6 +22,17 @@ public class cardBean {
 
     @Ignore
     private Boolean isRead = false; //配合随机算法使用
+
+    @ColumnInfo(name = "is_delete")
+    private int isDelete;
+
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
+    }
 
     public int getCid() {
         return cid;

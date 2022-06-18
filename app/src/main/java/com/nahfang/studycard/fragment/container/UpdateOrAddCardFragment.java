@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nahfang.studycard.R;
+import com.nahfang.studycard.bean.ArributeValue;
 import com.nahfang.studycard.bean.cardBean;
 import com.nahfang.studycard.common.BaseFragment;
 import com.nahfang.studycard.common.SingleVMFragment;
@@ -83,7 +84,9 @@ public class UpdateOrAddCardFragment extends SingleVMFragment<FragmentUpdateOrAd
                 cardBean.setContent(mBinding.editContent.getText().toString());
                 cardBean.setTitle(mBinding.editTitle.getText().toString());
                 cardBean.setCategory_name(viewmodel.CardsName.getValue());
+                cardBean.setIsDelete(ArributeValue.DELETE_FALSE);
                 viewmodel.addCard(cardBean);
+                viewmodel.oldName = viewmodel.CardsName.getValue();
                 Navigation.findNavController(view1).popBackStack();
             } else if (source.equals(UPDATE_FACTOR)) {
                 String content = mBinding.editContent.getText().toString();

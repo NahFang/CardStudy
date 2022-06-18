@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,12 @@ public class RecordFragment extends SingleVMFragment<FragmentRecordBinding,Recor
                     } else {
                         mBinding.switch1.setChecked(true);
                     }
+                }
+            });
+            mBinding.btRecycle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Navigation.findNavController(view).navigate(R.id.recoverFragment);
                 }
             });
         }

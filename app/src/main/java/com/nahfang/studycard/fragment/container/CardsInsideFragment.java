@@ -1,13 +1,11 @@
 package com.nahfang.studycard.fragment.container;
 
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
@@ -39,6 +37,7 @@ public class CardsInsideFragment extends SingleVMFragment<FragmentCardsInsideBin
 
         if (adapter_cards == null) {
             adapter_cards = new ViewpagerAdapter_cards();
+            adapter_cards.setViewModel(viewmodel);
         }
 
         viewmodel.cardArrayList.observe(this, new Observer<ArrayList<cardBean>>() {
@@ -104,6 +103,11 @@ public class CardsInsideFragment extends SingleVMFragment<FragmentCardsInsideBin
     @Override
     protected Class<CardsInsideViewModel> getViewModelClassType() {
         return CardsInsideViewModel.class;
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        viewmodel.oldName = "";
     }
 
     private void initViewpager2 () {

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
 
 import com.nahfang.studycard.application;
+import com.nahfang.studycard.bean.ArributeValue;
 import com.nahfang.studycard.bean.cardsBean;
 import com.nahfang.studycard.common.BaseViewModel;
 import com.nahfang.studycard.components.db.dataBase;
@@ -59,7 +60,7 @@ public class NoteViewModel extends BaseViewModel {
             @Override
             public void run() {
                 application.dataBase.cardsDao().deleteCategory(cardsBean);
-                application.dataBase.cardDao().deleteAllCardFollowName(cardsBean.getName_cards());
+                application.dataBase.cardDao().deleteAllCardFollowName(ArributeValue.DELETE_TURE,cardsBean.getName_cards());
             }
         });
 

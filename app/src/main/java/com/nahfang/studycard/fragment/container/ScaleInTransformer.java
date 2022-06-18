@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.viewpager2.widget.ViewPager2;
 
-class ScaleInTransformer implements ViewPager2.PageTransformer {
+public class ScaleInTransformer implements ViewPager2.PageTransformer {
     static final float DEFAULT_MIN_SCALE = 0.85f;
     static final float DEFAULT_CENTER = 0.5f;
 

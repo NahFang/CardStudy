@@ -14,11 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nahfang.studycard.R;
 import com.nahfang.studycard.bean.cardBean;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class ViewpagerAdapter_cards extends RecyclerView.Adapter<ViewpagerAdapter_cards.ViewHolder> {
 
     private ArrayList<cardBean> arrayList = new ArrayList<>();
+    private CardsInsideViewModel viewModel;
+
+    public void setViewModel (CardsInsideViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -26,6 +33,7 @@ public class ViewpagerAdapter_cards extends RecyclerView.Adapter<ViewpagerAdapte
        TextView textContent;
        TextView bt_update;
        TextView textTitle;
+       TextView bt_delete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -33,9 +41,14 @@ public class ViewpagerAdapter_cards extends RecyclerView.Adapter<ViewpagerAdapte
             textContent = (TextView) itemView.findViewById(R.id.text_content);
             bt_update = (TextView) itemView.findViewById(R.id.bt_updateInside);
             textTitle = (TextView) itemView.findViewById(R.id.text_title);
+            bt_delete = (TextView) itemView.findViewById(R.id.bt_delete_card);
         }
 
-       public TextView getBt_showAnswer() {
+        public TextView getBt_delete() {
+            return bt_delete;
+        }
+
+        public TextView getBt_showAnswer() {
            return bt_showAnswer;
        }
 
@@ -77,6 +90,10 @@ public class ViewpagerAdapter_cards extends RecyclerView.Adapter<ViewpagerAdapte
             bundle.putString("source",UpdateOrAddCardFragment.UPDATE_FACTOR);
             bundle.putInt("position",viewHolder.getAdapterPosition());
             Navigation.findNavController(view1).navigate(R.id.updateOrAddCardFragment,bundle);
+        });
+        viewHolder.getBt_delete().setOnClickListener((view2) -> {
+            cardBean cardBean = arrayList.get(viewHolder.getAdapterPosition());
+            viewModel.deleteCard(cardBean);
         });
         return viewHolder;
     }

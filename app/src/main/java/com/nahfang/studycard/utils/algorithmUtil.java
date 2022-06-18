@@ -15,6 +15,9 @@ public final class algorithmUtil {
     public static <T> T get_Random(ArrayList<T> arr) {
         T result = null;
         int arr_size = arr.size();
+
+        if(arr_size == 0) return null;
+
         Random ran = new Random();
         int index = ran.nextInt(arr_size);
         result = index > 0 ? arr.get(index) : arr.get(0);

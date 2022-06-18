@@ -14,10 +14,9 @@
         android:orientation="vertical"
         android:background="@drawable/bg_card">
         <TextView
-            android:id="@+id/text_title"
+            android:id="@+id/text_title_recover"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:text="UDP与TCP的区别是什么？"
             android:gravity="center"/>
         <View
             android:layout_width="60dp"
@@ -28,14 +27,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/text_content"
+                android:id="@+id/text_content_recover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:visibility="gone"/>
         </androidx.core.widget.NestedScrollView>
         <TextView
-            android:id="@+id/bt_showAnswerInside"
+            android:id="@+id/bt_showAnswerInside_recover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -44,10 +43,10 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
-        android:id="@+id/bt_updateInside"
+        android:id="@+id/bt_recover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="编辑"
+        android:text="恢复"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.909"
@@ -56,7 +55,7 @@
         app:layout_constraintVertical_bias="0.977" />
 
     <TextView
-        android:id="@+id/bt_delete_card"
+        android:id="@+id/bt_delete_card_recover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/delete"

@@ -67,6 +67,9 @@ public class CardFragment extends SingleVMFragment<FragmentCardBinding, CardView
         viewmodel.cards.observe(this, cardBeans ->{
             if (!cardBeans.isEmpty()) {
                 viewmodel.getCard();
+            } else {
+                viewmodel.mCard = null;
+                mBinding.cardContent.setText("快去添加你的专属卡片吧");
             }
         });
         viewmodel.card.observe(this, cardBean -> mBinding.cardContent.setText(cardBean.getTitle()));

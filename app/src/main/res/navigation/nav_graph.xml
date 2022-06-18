@@ -20,4 +20,9 @@
         android:name="com.nahfang.studycard.fragment.container.UpdateOrAddCardFragment"
         android:label="fragment_update_or_add_card"
         tools:layout="@layout/fragment_update_or_add_card" />
+    <fragment
+        android:id="@+id/recoverFragment"
+        android:name="com.nahfang.studycard.fragment.record.RecoverFragment"
+        android:label="fragment_recover"
+        tools:layout="@layout/fragment_recover" />
 </navigation>
