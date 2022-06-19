@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.nahfang.studycard.R;
 import com.nahfang.studycard.bean.cardBean;
 import com.nahfang.studycard.common.SingleVMFragment;
+import com.nahfang.studycard.components.empty.EmptyView;
 import com.nahfang.studycard.databinding.FragmentRecoverBinding;
 import com.nahfang.studycard.fragment.container.ScaleInTransformer;
 
@@ -73,7 +74,15 @@ public class RecoverFragment extends SingleVMFragment<FragmentRecoverBinding,Rec
         viewmodel.arr_card.observe(this, new Observer<ArrayList<cardBean>>() {
             @Override
             public void onChanged(ArrayList<cardBean> cardBeans) {
-                adapter_recover.setArrayList(cardBeans);
+                if(cardBeans.isEmpty()) {
+                    mBinding.empty.setVisibility(View.VISIBLE);
+                    mBinding.viewpagerCardsRecover.setVisibility(View.GONE);
+                } else {
+                    adapter_recover.setArrayList(cardBeans);
+                    mBinding.empty.setVisibility(View.GONE);
+                    mBinding.viewpagerCardsRecover.setVisibility(View.VISIBLE);
+
+                }
             }
         });
 

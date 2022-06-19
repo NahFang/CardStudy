@@ -19,8 +19,10 @@ public final class algorithmUtil {
         if(arr_size == 0) return null;
 
         Random ran = new Random();
-        int index = ran.nextInt(arr_size);
-        result = index > 0 ? arr.get(index) : arr.get(0);
+        int index = ran.nextInt(arr_size) - 1;
+        if(index >=0 && index < arr.size()) {
+            result = arr.get(index);
+        }
         return result;
     }
     //顺序算法

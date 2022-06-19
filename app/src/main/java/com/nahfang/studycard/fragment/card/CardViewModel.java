@@ -51,8 +51,7 @@ public class CardViewModel extends BaseViewModel {
                 case RecordFragment.RANDOM_CARD:mCard = algorithmUtil.get_Random(arr_cards);break;
             }
             arr_cards.remove(mCard);
-            mCard.setIsRead(true);
-            _card.setValue(mCard);
+            if (mCard != null) _card.setValue(mCard);
         }
 
     }
